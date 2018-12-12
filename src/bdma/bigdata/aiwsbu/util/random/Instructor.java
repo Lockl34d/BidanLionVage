@@ -1,5 +1,7 @@
 package bdma.bigdata.aiwsbu.util.random;
 
+import org.apache.commons.lang.CharSet;
+
 public class Instructor {
 
     private String rowKey = "";
@@ -14,6 +16,9 @@ public class Instructor {
 
     // TODO
     public String generateName() {
+    	
+    	CharSet.ASCII_ALPHA.
+    	
         return "";
     }
 
