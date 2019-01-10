@@ -42,17 +42,17 @@ public class transcriptMapper extends TableMapper<Text, Text>{
 				String[] keyPart = keyStr.split("/");
 				
 				Text key_res = new Text( keyPart[2] + "/" + semester_to_promo.get(keyPart[1]) + "/" + keyPart[3] + "/" + keyPart[1]);
-				System.out.println();
+				System.out.println(key_res.toString());
 				context.write(key_res, new Text(value.toString()));
 				//e/p/u/s n
 	}
 
-		public static String decode(final String hexString) {
-			final int len = hexString.length();
+		public static String decode(String hexString) {
+			int len = hexString.length();
 			if (len%2!=0) {
 				throw new RuntimeException("bad length");
 			}
-			final StringBuilder sb = new StringBuilder(len/2);
+			StringBuilder sb = new StringBuilder(len/2);
 			for (int i=0; i<len; i+=2) {
 				final String code = hexString.substring(i, i+2);
 				sb.append((char)Integer.parseInt(code, 16));
