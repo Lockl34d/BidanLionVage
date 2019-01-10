@@ -3,37 +3,61 @@ package bdma.bigdata.aiwsbu.mapreduce.exo1;
 import java.io.IOException;
 import java.util.HashMap;
 
+import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
+import org.apache.hadoop.hbase.mapreduce.TableMapper;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class transcriptMapper extends Mapper<Text, Text, Text, Text>{
+public class transcriptMapper extends TableMapper<Text, Text>{
 	HashMap<String,String> semester_to_promo = new HashMap<>();
 	
 	@Override
-	protected void setup(Mapper<Text, Text, Text, Text>.Context context) throws IOException, InterruptedException {
-		semester_to_promo.put("S01", "L1");
-		semester_to_promo.put("S02", "L1");
-		semester_to_promo.put("S03", "L2");
-		semester_to_promo.put("S04", "L2");
-		semester_to_promo.put("S05", "L3");
-		semester_to_promo.put("S06", "L3");
-		semester_to_promo.put("S07", "M1");
-		semester_to_promo.put("S08", "M1");
-		semester_to_promo.put("S09", "M2");
-		semester_to_promo.put("S10", "M2");
+	protected void setup(TableMapper<Text, Text>.Context context) throws IOException, InterruptedException {
+		semester_to_promo.put("01", "L1");
+		semester_to_promo.put("02", "L1");
+		semester_to_promo.put("03", "L2");
+		semester_to_promo.put("04", "L2");
+		semester_to_promo.put("05", "L3");
+		semester_to_promo.put("06", "L3");
+		semester_to_promo.put("07", "M1");
+		semester_to_promo.put("08", "M1");
+		semester_to_promo.put("09", "M2");
+		semester_to_promo.put("10", "M2");
 		
 	}
 	
+	
 	@Override
-	protected void map(Text key, Text value, Mapper<Text, Text, Text, Text>.Context context)
+	protected void map(ImmutableBytesWritable key, Result value,
+			Mapper<ImmutableBytesWritable, Result, Text, Text>.Context context)
 			throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
-		//a/s/e/u n
-		String keyStr = key.toString();
-		String[] keyPart = keyStr.split("/");
-		
-		Text key_res = new Text( keyPart[2] + "/" + semester_to_promo.get(keyPart[1]) + "/" + keyPart[3] + "/" + keyPart[1]);
-		context.write(key_res, value);
-		//e/p/u/s n
+		super.map(key, value, context);
+			//a/s/e/u n
+				String keyStr = key.toString();
+				keyStr = keyStr.replaceAll("\\s", "");
+				keyStr = decode(keyStr);
+				System.out.println(keyStr);
+				String[] keyPart = keyStr.split("/");
+				
+				Text key_res = new Text( keyPart[2] + "/" + semester_to_promo.get(keyPart[1]) + "/" + keyPart[3] + "/" + keyPart[1]);
+				System.out.println();
+				context.write(key_res, new Text(value.toString()));
+				//e/p/u/s n
 	}
+
+		public static String decode(final String hexString) {
+			final int len = hexString.length();
+			if (len%2!=0) {
+				throw new RuntimeException("bad length");
+			}
+			final StringBuilder sb = new StringBuilder(len/2);
+			for (int i=0; i<len; i+=2) {
+				final String code = hexString.substring(i, i+2);
+				sb.append((char)Integer.parseInt(code, 16));
+			}
+			return sb.toString();
+		}
+	
 }
