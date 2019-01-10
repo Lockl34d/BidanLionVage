@@ -25,10 +25,10 @@ public class Setup {
             System.err.println("Failed to connect to HBase.");
             System.exit(0);
         }
-        //addTable(Namespace.getCourseTableName(), Namespace.getCourseFamilies());
+        addTable(Namespace.getCourseTableName(), Namespace.getCourseFamilies());
         addTable(Namespace.getGradeTableName(), Namespace.getGradeFamilies());
-        //addTable(Namespace.getInstructorTableName(), Namespace.getInstructorFamilies());
-        //addTable(Namespace.getStudentTableName(), Namespace.getStudentFamilies());
+        addTable(Namespace.getInstructorTableName(), Namespace.getInstructorFamilies());
+        addTable(Namespace.getStudentTableName(), Namespace.getStudentFamilies());
     }
 
     public static void main(String[] args) {
@@ -70,9 +70,9 @@ public class Setup {
     }
 
     private void insertRows() {
-        //insertRowsCourse();
-        //insertRowsStudent();
-        //insertRowsInstructor();
+        insertRowsCourse();
+        insertRowsStudent();
+        insertRowsInstructor();
         insertRowsGrade();
     }
 

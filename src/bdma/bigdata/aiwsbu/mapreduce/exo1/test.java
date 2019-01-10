@@ -53,7 +53,7 @@ public class test extends Configured implements Tool {
     public static void request() throws IOException {
         Configuration config = HBaseConfiguration.create();
         Connection connection = ConnectionFactory.createConnection(config);
-        Filter filter = new  RowFilter(CompareFilter.CompareOp.EQUAL, new RegexStringComparator(".*/.*/2001000102/.*"));
+        //Filter filter = new  RowFilter(CompareFilter.CompareOp.EQUAL, new RegexStringComparator(".*/.*/2001000102/.*"));
         Scan scan = new Scan();
         TableName tableName = TableName.valueOf("A:G");
         Table table = connection.getTable(tableName);
