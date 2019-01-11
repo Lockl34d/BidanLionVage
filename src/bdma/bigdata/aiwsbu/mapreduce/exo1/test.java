@@ -48,15 +48,13 @@ public class test extends Configured implements Tool {
         Job job = Job.getInstance();
         job.setJarByClass(test.class);
         job.setJobName("je fais un test de count");
-        Configuration config = HBaseConfiguration.create();
-        Connection connection = ConnectionFactory.createConnection(config);
         Scan scan = new Scan();
         TableName tableName = TableName.valueOf("A:G");
         String out = "A:R";
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(LongWritable.class);
-        TableMapReduceUtil.initTableMapperJob(tableName, scan, transcriptMapper.class, ImmutableBytesWritable.class,
-                Result.class, job);
+        TableMapReduceUtil.initTableMapperJob(tableName, scan, transcriptMapper.class, Text.class,
+                Text.class, job);
         TableMapReduceUtil.initTableReducerJob(out, testReducer.class, job);
         
         

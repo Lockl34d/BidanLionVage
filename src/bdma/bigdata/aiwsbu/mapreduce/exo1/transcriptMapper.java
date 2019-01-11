@@ -39,8 +39,6 @@ public class transcriptMapper extends TableMapper<Text, Text>{
 	protected void map(ImmutableBytesWritable key, Result value,
 			Mapper<ImmutableBytesWritable, Result, Text, Text>.Context context)
 			throws IOException, InterruptedException {
-		// TODO Auto-generated method stub
-		super.map(key, value, context);
 			//a/s/e/u n
 				String keyStr = key.toString();
 				keyStr = keyStr.replaceAll("\\s", "");
