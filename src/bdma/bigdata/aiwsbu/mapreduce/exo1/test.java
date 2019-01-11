@@ -52,18 +52,13 @@ public class test extends Configured implements Tool {
         Connection connection = ConnectionFactory.createConnection(config);
         Scan scan = new Scan();
         TableName tableName = TableName.valueOf("A:G");
-        String out = "R";
+        String out = "A:R";
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(LongWritable.class);
         TableMapReduceUtil.initTableMapperJob(tableName, scan, transcriptMapper.class, ImmutableBytesWritable.class,
                 Result.class, job);
-        TableMapReduceUtil.initTableReducerJob(out, null, job);
+        TableMapReduceUtil.initTableReducerJob(out, testReducer.class, job);
         
-        //job.setOutputFormatClass(TextOutputFormat.class);
-        
-        
-        //FileOutputFormat.setOutputPath(job, new Path("~/Workspace/out.txt"));
-        //job.setMapperClass(testMapper.class);
         
         return job.waitForCompletion(true) ? 0 : 1;
     	

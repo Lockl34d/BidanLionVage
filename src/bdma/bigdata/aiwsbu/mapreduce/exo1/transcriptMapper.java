@@ -3,9 +3,16 @@ package bdma.bigdata.aiwsbu.mapreduce.exo1;
 import java.io.IOException;
 import java.util.HashMap;
 
+import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.Connection;
+import org.apache.hadoop.hbase.client.ConnectionFactory;
+import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
 import org.apache.hadoop.hbase.mapreduce.TableMapper;
+import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
@@ -43,7 +50,11 @@ public class transcriptMapper extends TableMapper<Text, Text>{
 				
 				Text key_res = new Text( keyPart[2] + "/" + semester_to_promo.get(keyPart[1]) + "/" + keyPart[3] + "/" + keyPart[1]);
 				System.out.println(key_res.toString());
+
 				context.write(key_res, new Text(value.toString()));
+				
+				
+				
 				//e/p/u/s n
 	}
 
