@@ -43,11 +43,9 @@ public class transcriptMapper extends TableMapper<Text, Text>{
 				String keyStr = key.toString();
 				keyStr = keyStr.replaceAll("\\s", "");
 				keyStr = decode(keyStr);
-				System.out.println(keyStr);
 				String[] keyPart = keyStr.split("/");
 				
 				Text key_res = new Text( keyPart[2] + "/" + semester_to_promo.get(keyPart[1]) + "/" + keyPart[3] + "/" + keyPart[1]);
-				System.out.println(key_res.toString());
 
 				context.write(key_res, new Text(value.toString()));
 				

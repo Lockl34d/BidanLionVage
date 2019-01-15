@@ -13,8 +13,10 @@ public class testReducer extends TableReducer<Text, Text, ImmutableBytesWritable
 	public void reduce(Text key, Iterable<Text> val, Context c) throws IOException, InterruptedException {
 		
 		Put put = new Put(Bytes.toBytes(key.toString()));
-		put.add(Bytes.toBytes("valeur"),Bytes.toBytes("test"),Bytes.toBytes(val.toString()));
+		put.add(Bytes.toBytes("value"),Bytes.toBytes("test"),Bytes.toBytes(val.toString()));
 		c.write(null, put);
+			
+		
 		
 		
 	}

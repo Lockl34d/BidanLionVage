@@ -45,13 +45,18 @@ public class test extends Configured implements Tool {
             System.out.printf("Usage: %s <INPUT> <OUTPUT>\n", getClass().getSimpleName());
             return -1;
         }*/
-        Job job = Job.getInstance();
+        //Job job = Job.getInstance();
+    	
+    	Configuration config = HBaseConfiguration.create();
+    	Job job = new Job(config,"Je fais un test");
         job.setJarByClass(test.class);
-        job.setJobName("je fais un test de count");
+        //job.setJobName("je fais un test de count");
         Scan scan = new Scan();
+        scan.setCaching(500);
+        scan.setCacheBlocks(false);
         TableName tableName = TableName.valueOf("A:G");
         String out = "A:R";
-        job.setOutputKeyClass(Text.class);
+        job.setOutputKeyClass(Text.class); 
         job.setOutputValueClass(LongWritable.class);
         TableMapReduceUtil.initTableMapperJob(tableName, scan, transcriptMapper.class, Text.class,
                 Text.class, job);
