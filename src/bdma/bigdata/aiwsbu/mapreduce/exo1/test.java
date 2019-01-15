@@ -66,7 +66,7 @@ public class test extends Configured implements Tool {
         return job.waitForCompletion(true) ? 0 : 1;
     	
     }
-    
+     
     public static void request() throws IOException {
         Configuration config = HBaseConfiguration.create();
         Connection connection = ConnectionFactory.createConnection(config);

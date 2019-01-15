@@ -2,7 +2,9 @@ package bdma.bigdata.aiwsbu.mapreduce.exo1;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
+import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
@@ -47,8 +49,11 @@ public class transcriptMapper extends TableMapper<Text, Text>{
 				
 				Text key_res = new Text( keyPart[2] + "/" + semester_to_promo.get(keyPart[1]) + "/" + keyPart[3] + "/" + keyPart[1]);
 
-				context.write(key_res, new Text(value.toString()));
+				byte[] val = value.getValue(Bytes.toBytes("#"), Bytes.toBytes("G"));
+				String note = new String(val, "UTF-8");
+
 				
+				context.write(key_res, new Text(note));
 				
 				
 				//e/p/u/s n
