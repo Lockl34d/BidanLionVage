@@ -8,7 +8,7 @@ import org.apache.hadoop.hbase.mapreduce.TableReducer;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.io.Text;
 
-public class testReducer extends TableReducer<Text, Text, ImmutableBytesWritable>{
+public class exo1Reducer extends TableReducer<Text, Text, ImmutableBytesWritable>{
 
 	public void reduce(Text key, Iterable<Text> val, Context c) throws IOException, InterruptedException {
 		//System.out.println("key: "+key);

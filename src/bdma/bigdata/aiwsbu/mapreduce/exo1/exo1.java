@@ -30,10 +30,10 @@ import org.apache.hadoop.util.ToolRunner;
 
 
 
-public class test extends Configured implements Tool {
+public class exo1 extends Configured implements Tool {
 
     public static void main(String[] args) throws Exception {
-        int exitCode = ToolRunner.run(new test(), args);
+        int exitCode = ToolRunner.run(new exo1(), args);
         //System.exit(exitCode);
     	//request();
     	System.out.println(exitCode);
@@ -49,7 +49,7 @@ public class test extends Configured implements Tool {
     	
     	Configuration config = HBaseConfiguration.create();
     	Job job = new Job(config,"Je fais un test");
-        job.setJarByClass(test.class);
+        job.setJarByClass(exo1.class);
         //job.setJobName("je fais un test de count");
         Scan scan = new Scan();
         scan.setCaching(500);
@@ -58,9 +58,9 @@ public class test extends Configured implements Tool {
         String out = "A:R";
         job.setOutputKeyClass(Text.class); 
         job.setOutputValueClass(LongWritable.class);
-        TableMapReduceUtil.initTableMapperJob(tableName, scan, transcriptMapper.class, Text.class,
+        TableMapReduceUtil.initTableMapperJob(tableName, scan, exo1Mapper.class, Text.class,
                 Text.class, job);
-        TableMapReduceUtil.initTableReducerJob(out, testReducer.class, job);
+        TableMapReduceUtil.initTableReducerJob(out, exo1Reducer.class, job);
         
         
         return job.waitForCompletion(true) ? 0 : 1;

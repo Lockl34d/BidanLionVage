@@ -18,7 +18,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class transcriptMapper extends TableMapper<Text, Text>{
+public class exo1Mapper extends TableMapper<Text, Text>{
 	HashMap<String,String> semester_to_promo = new HashMap<>();
 	
 	@Override
