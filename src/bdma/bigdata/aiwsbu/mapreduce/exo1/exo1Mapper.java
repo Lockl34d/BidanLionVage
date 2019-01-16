@@ -16,7 +16,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class transcriptMapper extends TableMapper<Text, Text>{
+public class exo1Mapper extends TableMapper<Text, Text>{
 	HashMap<String,String> semester_to_promo = new HashMap<>();
 	
 	@Override
@@ -39,20 +39,19 @@ public class transcriptMapper extends TableMapper<Text, Text>{
 	protected void map(ImmutableBytesWritable key, Result value,
 			Mapper<ImmutableBytesWritable, Result, Text, Text>.Context context)
 			throws IOException, InterruptedException {
-		// TODO Auto-generated method stub
-		super.map(key, value, context);
 			//a/s/e/u n
 				String keyStr = key.toString();
 				keyStr = keyStr.replaceAll("\\s", "");
 				keyStr = decode(keyStr);
-				System.out.println(keyStr);
 				String[] keyPart = keyStr.split("/");
 				
 				Text key_res = new Text( keyPart[2] + "/" + semester_to_promo.get(keyPart[1]) + "/" + keyPart[3] + "/" + keyPart[1]);
-				System.out.println(key_res.toString());
 
-				context.write(key_res, new Text(value.toString()));
+				byte[] val = value.getValue(Bytes.toBytes("#"), Bytes.toBytes("G"));
+				String note = new String(val, "UTF-8");
+
 				
+				context.write(key_res, new Text(note));
 				
 				
 				//e/p/u/s n

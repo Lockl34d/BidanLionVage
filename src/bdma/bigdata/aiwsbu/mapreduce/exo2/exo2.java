@@ -58,9 +58,9 @@ public class exo2 extends Configured implements Tool {
         String out = "A:R";
         job.setOutputKeyClass(Text.class); 
         job.setOutputValueClass(LongWritable.class);
-        TableMapReduceUtil.initTableMapperJob(tableName, scan, transcriptMapper.class, Text.class,
+        TableMapReduceUtil.initTableMapperJob(tableName, scan, exo2Mapper.class, Text.class,
                 Text.class, job);
-        TableMapReduceUtil.initTableReducerJob(out, testReducer.class, job);
+        TableMapReduceUtil.initTableReducerJob(out, exo2Reducer.class, job);
         
         
         return job.waitForCompletion(true) ? 0 : 1;

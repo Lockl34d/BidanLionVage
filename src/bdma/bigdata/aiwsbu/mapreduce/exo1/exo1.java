@@ -27,13 +27,17 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
+import bdma.bigdata.aiwsbu.mapreduce.exo2.exo2;
+import bdma.bigdata.aiwsbu.mapreduce.exo2.exo2Mapper;
+import bdma.bigdata.aiwsbu.mapreduce.exo2.exo2Reducer;
 
 
 
-public class test extends Configured implements Tool {
+
+public class exo1 extends Configured implements Tool {
 
     public static void main(String[] args) throws Exception {
-        int exitCode = ToolRunner.run(new test(), args);
+        int exitCode = ToolRunner.run(new exo1(), args);
         //System.exit(exitCode);
     	//request();
     	System.out.println(exitCode);
@@ -45,19 +49,22 @@ public class test extends Configured implements Tool {
             System.out.printf("Usage: %s <INPUT> <OUTPUT>\n", getClass().getSimpleName());
             return -1;
         }*/
-        Job job = Job.getInstance();
-        job.setJarByClass(test.class);
-        job.setJobName("je fais un test de count");
-        Configuration config = HBaseConfiguration.create();
-        Connection connection = ConnectionFactory.createConnection(config);
+        //Job job = Job.getInstance();
+    	
+    	Configuration config = HBaseConfiguration.create();
+    	Job job = new Job(config,"Je fais un test");
+        job.setJarByClass(exo2.class);
+        //job.setJobName("je fais un test de count");
         Scan scan = new Scan();
+        scan.setCaching(500);
+        scan.setCacheBlocks(false);
         TableName tableName = TableName.valueOf("A:G");
         String out = "A:R";
-        job.setOutputKeyClass(Text.class);
+        job.setOutputKeyClass(Text.class); 
         job.setOutputValueClass(LongWritable.class);
-        TableMapReduceUtil.initTableMapperJob(tableName, scan, transcriptMapper.class, ImmutableBytesWritable.class,
-                Result.class, job);
-        TableMapReduceUtil.initTableReducerJob(out, testReducer.class, job);
+        TableMapReduceUtil.initTableMapperJob(tableName, scan, exo1Mapper.class, Text.class,
+                Text.class, job);
+        TableMapReduceUtil.initTableReducerJob(out, exo1Reducer.class, job);
         
         
         return job.waitForCompletion(true) ? 0 : 1;
