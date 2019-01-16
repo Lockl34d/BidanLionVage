@@ -34,8 +34,6 @@ public class exo2 extends Configured implements Tool {
 
     public static void main(String[] args) throws Exception {
         int exitCode = ToolRunner.run(new exo2(), args);
-        //System.exit(exitCode);
-    	//request();
     	System.out.println(exitCode);
     }
     
@@ -48,14 +46,13 @@ public class exo2 extends Configured implements Tool {
         //Job job = Job.getInstance();
     	
     	Configuration config = HBaseConfiguration.create();
-    	Job job = new Job(config,"Je fais un test");
+    	Job job = new Job(config,"Exo2");
         job.setJarByClass(exo2.class);
-        //job.setJobName("je fais un test de count");
         Scan scan = new Scan();
         scan.setCaching(500);
         scan.setCacheBlocks(false);
         TableName tableName = TableName.valueOf("A:G");
-        String out = "A:R";
+        String out = "A:N";
         job.setOutputKeyClass(Text.class); 
         job.setOutputValueClass(LongWritable.class);
         TableMapReduceUtil.initTableMapperJob(tableName, scan, exo2Mapper.class, Text.class,
@@ -67,19 +64,7 @@ public class exo2 extends Configured implements Tool {
     	
     }
      
-    public static void request() throws IOException {
-        Configuration config = HBaseConfiguration.create();
-        Connection connection = ConnectionFactory.createConnection(config);
-        //Filter filter = new  RowFilter(CompareFilter.CompareOp.EQUAL, new RegexStringComparator(".*/.*/2001000102/.*"));
-        Scan scan = new Scan();
-        TableName tableName = TableName.valueOf("A:G");
-        Table table = connection.getTable(tableName);
-        try (ResultScanner scanner = table.getScanner(scan)) {
-            for (Result scannerResult : scanner) {
-                System.out.println("Scan: " + scannerResult);
-            }
-        }       
-    }
+    
 	
 	
 }
