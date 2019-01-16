@@ -15,14 +15,12 @@ public class exo2Reducer extends TableReducer<Text, Text, ImmutableBytesWritable
 	public void reduce(Text key, Iterable<Text> val, Context c) throws IOException, InterruptedException {
 
 		
-		int sum = 0;
-		int size = 0;
+		int res = 0;
 		for (Text n : val) {
 			Integer note = Integer.valueOf(n.toString());
-			sum += note;
-			size++;
+			res += note > 10 ? 1 : 0;
 		}
-		int res = sum / size;
+		
 		
 		Put put = new Put(Bytes.toBytes(key.toString()));
 		put.add(Bytes.toBytes("value"), Bytes.toBytes("test"), Bytes.toBytes(""+res));
