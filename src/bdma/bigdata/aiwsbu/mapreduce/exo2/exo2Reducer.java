@@ -20,6 +20,7 @@ public class exo2Reducer extends TableReducer<Text, Text, ImmutableBytesWritable
 		for (Text n : val) {
 			Integer note = Integer.valueOf(n.toString());
 			res += note > 10 ? 1 : 0;
+			nb++;
 		}
 		res /= nb;
 		
