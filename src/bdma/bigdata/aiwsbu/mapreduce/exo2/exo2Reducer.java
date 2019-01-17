@@ -8,8 +8,6 @@ import org.apache.hadoop.hbase.mapreduce.TableReducer;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.io.Text;
 
-import com.sun.xml.internal.ws.util.StreamUtils;
-
 public class exo2Reducer extends TableReducer<Text, Text, ImmutableBytesWritable>{
 
 	public void reduce(Text key, Iterable<Text> val, Context c) throws IOException, InterruptedException {

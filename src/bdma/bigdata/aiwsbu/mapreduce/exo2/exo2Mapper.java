@@ -47,7 +47,7 @@ public class exo2Mapper extends TableMapper<Text, Text>{
 				keyStr = decode(keyStr);
 				String[] keyPart = keyStr.split("/");
 				
-				Text key_res = new Text( keyPart[1]);
+				Text key_res = new Text( keyPart[1]+"/"+keyPart[0]);
 
 				
 				byte[] val = value.getValue(Bytes.toBytes("#"), Bytes.toBytes("G"));
