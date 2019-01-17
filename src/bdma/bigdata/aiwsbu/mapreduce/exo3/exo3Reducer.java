@@ -12,7 +12,7 @@ import org.apache.hadoop.io.Text;
 public class exo3Reducer extends TableReducer<Text, Text, ImmutableBytesWritable>{
 
 	public void reduce(Text key, Iterable<Text> val, Context c) throws IOException, InterruptedException {
-
+		//u/name n
 		
 		float res = 0;
 		int nb = 0;

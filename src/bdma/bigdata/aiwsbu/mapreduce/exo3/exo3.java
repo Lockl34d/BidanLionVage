@@ -2,6 +2,8 @@ package bdma.bigdata.aiwsbu.mapreduce.exo3;
 
 
 
+import java.io.IOException;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.hbase.HBaseConfiguration;
@@ -25,13 +27,9 @@ public class exo3 extends Configured implements Tool {
     }
     
     
+    
     public int run(String[] args) throws Exception{
-        /*if (args.length != 2) {
-            System.out.printf("Usage: %s <INPUT> <OUTPUT>\n", getClass().getSimpleName());
-            return -1;
-        }*/
-        //Job job = Job.getInstance();
-    	
+
     	Configuration config = HBaseConfiguration.create();
     	Job job = new Job(config,"Exo3");
         job.setJarByClass(exo3.class);
