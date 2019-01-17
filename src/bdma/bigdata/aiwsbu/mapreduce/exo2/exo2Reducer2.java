@@ -9,16 +9,16 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.io.Text;
 
 
-public class exo2Reducer extends TableReducer<Text, Text, ImmutableBytesWritable>{
+public class exo2Reducer2 extends TableReducer<Text, Text, ImmutableBytesWritable>{
 
 	
 	public void reduce(Text key, Iterable<Text> val, Context c) throws IOException, InterruptedException {
-		//s/a/e n
-		int res = 0;
+		//s/a n
+		float res = 0;
 		int nb = 0;
 		for (Text n : val) {
 			Integer note = Integer.valueOf(n.toString());
-			res += note;
+			res += note < 1000 ? 1 :0;
 			nb++;
 		}
 		res /= nb;

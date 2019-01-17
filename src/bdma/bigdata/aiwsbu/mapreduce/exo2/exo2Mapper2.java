@@ -8,34 +8,25 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class exo2Mapper extends TableMapper<Text, Text>{
+public class exo2Mapper2 extends TableMapper<Text, Text>{
 	
 	@Override
 	protected void map(ImmutableBytesWritable key, Result value, Mapper<ImmutableBytesWritable, Result, Text, Text>.Context context)
 			throws IOException, InterruptedException {
-		//a/s/e/u n
+		//s/a/e n
 		String keyStr = key.toString();
 		keyStr = keyStr.replaceAll("\\s", "");
 		keyStr = decode(keyStr);
 		String[] keyPart = keyStr.split("/");
 
-		Text key_res = new Text( keyPart[1]+"/"+keyPart[0]+"/"+keyPart[2]);
+		Text key_res = new Text( keyPart[0]+"/"+keyPart[1]);
 
 
-		byte[] val = value.getValue(Bytes.toBytes("#"), Bytes.toBytes("G"));
-		String note = "";
-		try {
-			note = new String(val, "UTF-8");
-			
-		} catch (Exception e) {
-			System.out.println("-----------------------------");
-			System.out.println(val);
-			System.out.println(val);
-			System.out.println("-----------------------------");
-		}
+		byte[] val = value.getValue(Bytes.toBytes("value"), Bytes.toBytes("test"));
+		String note = new String(val, "UTF-8");
 
 		context.write(key_res, new Text(note));
-		//s/a/e n
+		//s/a n
 	}
 
 	public static String decode(String hexString) {
