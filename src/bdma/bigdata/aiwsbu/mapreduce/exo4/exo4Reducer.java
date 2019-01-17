@@ -18,7 +18,7 @@ public class exo4Reducer extends TableReducer<Text, Text, ImmutableBytesWritable
 		int nb = 0;
 		for (Text n : val) {
 			Integer note = Integer.valueOf(n.toString());
-			res += note > 10 ? 1 : 0;
+			res += note > 1000 ? 1 : 0;
 			nb++;
 		}
 		res /= nb;
