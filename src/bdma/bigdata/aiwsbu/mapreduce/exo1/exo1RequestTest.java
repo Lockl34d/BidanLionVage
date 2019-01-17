@@ -24,10 +24,13 @@ public class exo1RequestTest {
 
 	      // Instantiating HTable class(recuperation nom etudiant)
 	      HTable table1 = new HTable(config, "A:S");
+	      
+	      String numEtu = args[0].toString();
+	      String program = args[1].toString();
 
 	      // Instantiating the Scan class
 	      Scan scan1 = new Scan();
-	      RowFilter filtre1 = new RowFilter(CompareOp.EQUAL, new RegexStringComparator("2001000101"));
+	      RowFilter filtre1 = new RowFilter(CompareOp.EQUAL, new RegexStringComparator(numEtu));
 	      
 	      
 
@@ -37,7 +40,7 @@ public class exo1RequestTest {
 	      scan1.addColumn(Bytes.toBytes("#"), Bytes.toBytes("L"));
 	      scan1.addColumn(Bytes.toBytes("C"), Bytes.toBytes("E"));
 	      scan1.addColumn(Bytes.toBytes("#"), Bytes.toBytes("P"));
-	      String program = "L3";
+	      
 
 	      // Getting the scan result
 	      ResultScanner scanner1 = table1.getScanner(scan1);
@@ -48,7 +51,7 @@ public class exo1RequestTest {
 	    	  byte[] res1_2 = r1.getValue(Bytes.toBytes("#"), Bytes.toBytes("L"));
 	    	  byte[] res1_3 = r1.getValue(Bytes.toBytes("C"), Bytes.toBytes("E"));
 	    	 
-	    	  String numEtu = new String(keyEtu, "UTF-8");
+	    	  
 	    	  String name = new String(res1, "UTF-8") + " " + new String(res1_2, "UTF-8");
 	    	  String email = new String(res1_3, "UTF-8");
 	    	  
@@ -136,18 +139,72 @@ public class exo1RequestTest {
 		      
 		      }
 	    	
-		      System.out.println("Nom : " + name + "; Email : " + email + "; Program : " + program);
-		      System.out.println("First :");
-		      for(ArrayList<String> sublist : first)
+		      System.out.print("{\"Name\":\"" + name + "\",\"Email\":\"" + email + "\",\"Program\":\"" + program+"\",");
+		      System.out.print("\"First\":[");
+		      for(int j = 0; j<first.size(); j++)
 		      {
-		    	  for(String token : sublist)
-		    		  System.out.print(token + "; ");
+		    	  
+		    	  if(j<first.size()-2) {
+			    	  for(int i = 0; i<first.get(j).size(); i++) {
+			    		  if(i==0) {
+			    			  System.out.print("{\"Code\":\""+first.get(j).get(0)+"\",");
+			    		  }
+			    		  if(i==1) {
+			    			  System.out.print("\"Name\":\""+first.get(j).get(1)+"\",");
+			    		  }
+			    		  if(i==2) {
+			    			  System.out.print("\"Grade\":\""+first.get(j).get(2)+"\"},");
+			    		  }
+			    	  }
+		    	  }else {
+			    	  for(int i = 0; i<first.get(j).size(); i++) {
+			    		  if(i==0) {
+			    			  System.out.print("{\"Code\":\""+first.get(j).get(0)+"\",");
+			    		  }
+			    		  if(i==1) {
+			    			  System.out.print("\"Name\":\""+first.get(j).get(1)+"\",");
+			    		  }
+			    		  if(i==2) {
+			    			  System.out.print("\"Grade\":\""+first.get(j).get(2)+"\"}],");
+			    		  }
+			    	  }		    		  
+
+		    	  }
 		      }
-		      System.out.println("\n Second :");
-		      for(ArrayList<String> sublist2 : second)
+		      
+		      
+		      
+		      
+		      System.out.print("\"Second\":[");
+		      for(int j = 0; j<second.size(); j++)
 		      {
-		    	  for(String token2 : sublist2)
-		    		  System.out.print(token2 + "; ");
+		    	  
+		    	  if(j<second.size()-1) {
+			    	  for(int i = 0; i<second.get(j).size(); i++) {
+			    		  if(i==0) {
+			    			  System.out.print("{\"Code\":\""+second.get(j).get(0)+"\",");
+			    		  }
+			    		  if(i==1) {
+			    			  System.out.print("\"Name\":\""+second.get(j).get(1)+"\",");
+			    		  }
+			    		  if(i==2) {
+			    			  System.out.print("\"Grade\":\""+second.get(j).get(2)+"\"},");
+			    		  }
+			    	  }
+		    	  }else {
+			    	  for(int i = 0; i<second.get(j).size(); i++) {
+			    		  if(i==0) {
+			    			  System.out.print("{\"Code\":\""+second.get(j).get(0)+"\",");
+			    		  }
+			    		  if(i==1) {
+			    			  System.out.print("\"Name\":\""+second.get(j).get(1)+"\",");
+			    		  }
+			    		  if(i==2) {
+			    			  System.out.print("\"Grade\":\""+second.get(j).get(2)+"\"}]}");
+			    		  }
+			    	  }		    		  
+
+		    	  }
 		      }
 	      }
 	      
