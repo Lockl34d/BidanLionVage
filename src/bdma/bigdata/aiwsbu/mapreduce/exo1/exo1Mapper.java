@@ -47,7 +47,7 @@ public class exo1Mapper extends TableMapper<Text, Text>{
 				keyStr = decode(keyStr);
 				String[] keyPart = keyStr.split("/");
 				
-				Text key_res = new Text( keyPart[2] + "/" + semester_to_promo.get(keyPart[1]) + "/" + keyPart[3] + "/" + keyPart[1]);
+				Text key_res = new Text( keyPart[2] + "/" + semester_to_promo.get(keyPart[1]) + "/" + keyPart[3] + "/" + keyPart[1]+ "/" +keyPart[0]);
 
 				byte[] val = value.getValue(Bytes.toBytes("#"), Bytes.toBytes("G"));
 				String note = new String(val, "UTF-8");
@@ -56,7 +56,7 @@ public class exo1Mapper extends TableMapper<Text, Text>{
 				context.write(key_res, new Text(note));
 				
 				
-				//e/p/u/s n
+				// key: e/p/u/s/a  valeur: n
 	}
 
 		public static String decode(String hexString) {
