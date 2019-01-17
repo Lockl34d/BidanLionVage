@@ -48,7 +48,7 @@ public class exo1 extends Configured implements Tool {
         //Job job = Job.getInstance();
     	
     	Configuration config = HBaseConfiguration.create();
-    	Job job = new Job(config,"Je fais un test");
+    	Job job = new Job(config,"Note");
         job.setJarByClass(exo1.class);
         //job.setJobName("je fais un test de count");
         Scan scan = new Scan();
