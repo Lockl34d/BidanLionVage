@@ -45,9 +45,25 @@ public class exo2Request {
 	      
 	      System.out.print("[");
 	    
-	      
+	      int premierpassage = 1;
 	      
 	      for(Result r1 : scanner1) {
+	    	  
+	    	  if(premierpassage==1) {
+		    	  byte[] key = r1.getRow();
+		    	  byte[] ratio = r1.getValue(Bytes.toBytes("value"), Bytes.toBytes("test"));
+		    	 
+		    	  
+		    	  String monratio = new String(ratio, "UTF-8");
+		    	  String mykey = new String(key,"UTF-8");
+		  		  String[] keyPart = mykey.split("/");
+					
+		  		  String annee = keyPart[1];
+		  		  
+		  		  System.out.print("{\"Year\":\""+annee+"\",\"Rate\":\""+monratio+"\"}"); 
+	    		  
+		  		  premierpassage = premierpassage-1;
+	    	  }else {
 	    	  byte[] key = r1.getRow();
 	    	  byte[] ratio = r1.getValue(Bytes.toBytes("value"), Bytes.toBytes("test"));
 	    	 
@@ -58,8 +74,8 @@ public class exo2Request {
 				
 	  		  String annee = keyPart[1];
 	  		  
-	  		  System.out.print("{\"Year\":\""+annee+"\",\"Rate\":\""+monratio+"\"}");
-	    	  
+	  		  System.out.print(",{\"Year\":\""+annee+"\",\"Rate\":\""+monratio+"\"}");
+	    	  } 
 
 	      }
 	      System.out.print("]");
