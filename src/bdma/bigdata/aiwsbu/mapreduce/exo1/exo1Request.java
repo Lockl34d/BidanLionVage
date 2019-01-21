@@ -226,8 +226,7 @@ public class exo1Request {
 
 	}
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 316ba33453b4fcc3c503f914bcc4a209c9b35667
+
+
+
