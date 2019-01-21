@@ -24,7 +24,7 @@ public class exo4Request {
 	      Configuration config = HBaseConfiguration.create();
 
 	      // Instantiating HTable class(recuperation nom etudiant)
-	      HTable table1 = new HTable(config, "A:QUATRE");
+	      HTable table1 = new HTable(config, "A:Exo4");
 	      
 	      String idmatiere = args[0].toString();
 	      String year = args[1].toString();
@@ -44,7 +44,7 @@ public class exo4Request {
 	      // Getting the scan result
 	      ResultScanner scanner1 = table1.getScanner(scan1);
     	  
-	     
+
 	      
 	      for(Result r1 : scanner1) {
 	    	  
@@ -56,24 +56,28 @@ public class exo4Request {
 
 		      // Instantiating the Scan class
 		      Scan scan3 = new Scan();
-		      RowFilter filtre3 = new RowFilter(CompareOp.EQUAL, new RegexStringComparator(idmatiere+"/["+newYear.charAt(0)+"-9]["+newYear.charAt(1)+"-9]["+newYear.charAt(2)+"-9]["+newYear.charAt(3)+"-9]") );
+		      String my_key = idmatiere+"/"+newYear;
+		      //RowFilter filtre3 = new RowFilter(CompareOp.EQUAL, new RegexStringComparator(idmatiere+"/["+newYear.charAt(0)+"-9]["+newYear.charAt(1)+"-9]["+newYear.charAt(2)+"-9]["+newYear.charAt(3)+"-9]") );
 		      
 		      
 
 		      // Scanning the required columns
-		      scan3.setFilter(filtre3);
+		      //scan3.setFilter(filtre3);
+		      scan3.withStartRow(my_key.getBytes());
+		      scan3.setCacheBlocks(false);
 		      scan3.setMaxResultSize(1);
 		      scan3.addColumn(Bytes.toBytes("#"), Bytes.toBytes("N"));
 
 		      // Getting the scan result
 		      ResultScanner scanner3 = table3.getScanner(scan3);
+		      String name = new String(scanner3.next().getValue(Bytes.toBytes("#"), Bytes.toBytes("N")), "UTF-8");
+	    	  System.out.println("{\"Name\":\""+name+"\",\"Rate\":\""+note+"\"}");
 	    	  
-		      for(Result r3 : scanner3) {
+		      /*for(Result r3 : scanner3) {
 		    	  byte[] res3 = r3.getValue(Bytes.toBytes("#"), Bytes.toBytes("N"));
 		    	  String name = new String(res3, "UTF-8");
-		    	  System.out.println("{\"Name\":\""+name+"\",\"Rate\":\""+note+"\"}");
 	    	  
-		      }
+		      }*/
 
 	      }
 	      
