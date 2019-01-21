@@ -64,7 +64,7 @@ public class exo1Request {
 	    	 
 	    	  
 	    	  // Instantiating HTable class
-		      HTable table2 = new HTable(config, "A:R");
+		      HTable table2 = new HTable(config, "A:Exo1");
 
 		      // Instantiating the Scan class
 		      Scan scan2 = new Scan();
@@ -110,12 +110,14 @@ public class exo1Request {
 
 			      // Instantiating the Scan class
 			      Scan scan3 = new Scan();
-			      RowFilter filtre3 = new RowFilter(CompareOp.EQUAL, new RegexStringComparator(cours+"/["+newYear.charAt(0)+"-9]["+newYear.charAt(1)+"-9]["+newYear.charAt(2)+"-9]["+newYear.charAt(3)+"-9]") );
-			      
+			      String the_key = cours+"/"+newYear;
+			      //RowFilter filtre3 = new RowFilter(CompareOp.EQUAL, new RegexStringComparator(cours+"/["+newYear.charAt(0)+"-9]["+newYear.charAt(1)+"-9]["+newYear.charAt(2)+"-9]["+newYear.charAt(3)+"-9]") );
+			      scan3.setCacheBlocks(false);
+			      scan3.withStartRow(the_key.getBytes());
 			      
 
 			      // Scanning the required columns
-			      scan3.setFilter(filtre3);
+			      //scan3.setFilter(filtre3);
 			      scan3.setMaxResultSize(1);
 			      scan3.addColumn(Bytes.toBytes("#"), Bytes.toBytes("N"));
 
@@ -214,4 +216,3 @@ public class exo1Request {
 	}
 
 }
-

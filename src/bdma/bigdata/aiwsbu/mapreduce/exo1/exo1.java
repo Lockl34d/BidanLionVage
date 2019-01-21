@@ -6,9 +6,13 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.HColumnDescriptor;
+import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.TableExistsException;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
+import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
@@ -48,6 +52,14 @@ public class exo1 extends Configured implements Tool {
         //Job job = Job.getInstance();
     	
     	Configuration config = HBaseConfiguration.create();
+    	
+    	
+    	try {
+			HBaseAdmin admin = new HBaseAdmin(config);
+			HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("A:Exo1"));
+			tableDescriptor.addFamily(new HColumnDescriptor("value"));
+			admin.createTable(tableDescriptor);	} catch (TableExistsException e) {}		
+
     	Job job = new Job(config,"Note");
         job.setJarByClass(exo1.class);
         //job.setJobName("je fais un test de count");
@@ -55,7 +67,7 @@ public class exo1 extends Configured implements Tool {
         scan.setCaching(500);
         scan.setCacheBlocks(false);
         TableName tableName = TableName.valueOf("A:G");
-        String out = "A:R";
+        String out = "A:Exo1";
         job.setOutputKeyClass(Text.class); 
         job.setOutputValueClass(LongWritable.class);
         TableMapReduceUtil.initTableMapperJob(tableName, scan, exo1Mapper.class, Text.class,
