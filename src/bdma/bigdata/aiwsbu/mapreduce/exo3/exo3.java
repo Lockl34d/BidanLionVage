@@ -7,7 +7,11 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.HColumnDescriptor;
+import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.TableExistsException;
 import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
 import org.apache.hadoop.io.LongWritable;
@@ -31,13 +35,27 @@ public class exo3 extends Configured implements Tool {
     public int run(String[] args) throws Exception{
 
     	Configuration config = HBaseConfiguration.create();
+    	
+    	try {
+
+			HBaseAdmin admin = new HBaseAdmin(config);
+
+			HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("A:Exo3"));
+
+			tableDescriptor.addFamily(new HColumnDescriptor("value"));
+
+			admin.createTable(tableDescriptor);			
+
+		} catch (TableExistsException e) {}
+    	
+    	
     	Job job = new Job(config,"Exo3");
         job.setJarByClass(exo3.class);
         Scan scan = new Scan();
         scan.setCaching(500);
         scan.setCacheBlocks(false);
         TableName tableName = TableName.valueOf("A:G");
-        String out = "A:TROIS";
+        String out = "A:Exo3";
         job.setOutputKeyClass(Text.class); 
         job.setOutputValueClass(LongWritable.class);
         TableMapReduceUtil.initTableMapperJob(tableName, scan, exo3Mapper.class, Text.class,

@@ -48,11 +48,19 @@ public class exo3Mapper extends TableMapper<Text, Text>{
 		String note = new String(val, "UTF-8");
 
 		
+		
+		
+		
     	
     	try {
-    		Get get = new Get(Bytes.toBytes(keyPart[3]+"/"+(10000-Integer.valueOf(keyPart[0]))));
-        	
-        	Result result = table.get(get);
+    		//Get get = new Get(Bytes.toBytes(keyPart[3]+"/"+(9999-Integer.valueOf(keyPart[0]))));
+        	Scan scan = new Scan();
+        	scan.withStartRow(Bytes.toBytes(keyPart[3]+"/"+(9999-Integer.valueOf(keyPart[0]))));
+        	scan.setCacheBlocks(false);
+		    scan.setMaxResultSize(1);
+    		
+    		
+        	Result result = table.getScanner(scan).next();
         	String name = new String(result.getValue(Bytes.toBytes("#"), Bytes.toBytes("N")));
         	last = name;
         	
