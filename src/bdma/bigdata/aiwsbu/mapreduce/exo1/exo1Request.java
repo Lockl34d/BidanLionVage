@@ -44,7 +44,7 @@ public class exo1Request {
 
 	      // Getting the scan result
 	      ResultScanner scanner1 = table1.getScanner(scan1);
-    	  
+
 	      for(Result r1 : scanner1) {
 	    	  byte[] keyEtu = r1.getRow();
 	    	  byte[] res1 = r1.getValue(Bytes.toBytes("#"), Bytes.toBytes("F"));
@@ -82,7 +82,7 @@ public class exo1Request {
 		      //for (Result result = scanner.next(); result != null; result = scanner.next())
 		      
 		      for(Result r : scanner2) {
-
+		    	  
 		    	  byte[] key = r.getRow();
 		    	  
 		    	  String mykey = new String(key, "UTF-8");
@@ -98,7 +98,10 @@ public class exo1Request {
 		    	  String note = new String(res, "UTF-8");
 		    	  
 		    	  //--------------------------------------------------------------------------------
-		    	  
+		    	  if(annee.equals("2018")) {
+		    		  System.out.print("NOT FOUND");
+		    		  break;
+		    	  }
 		    	  int year = 9999-(Integer.parseInt(annee));
 		    	  String newYear =String.valueOf(year);
 		    	  
@@ -140,73 +143,80 @@ public class exo1Request {
 			   
 		      
 		      }
-	    	
+		      if(first.size()==0) {
+		    	  System.out.print("NOT FOUND");
+		      }else {   	
 		      System.out.print("{\"Name\":\"" + name + "\",\"Email\":\"" + email + "\",\"Program\":\"" + program+"\",");
 		      System.out.print("\"First\":[");
-		      for(int j = 0; j<first.size(); j++)
-		      {
-		    	  
-		    	  if(j<first.size()-2) {
-			    	  for(int i = 0; i<first.get(j).size(); i++) {
-			    		  if(i==0) {
-			    			  System.out.print("{\"Code\":\""+first.get(j).get(0)+"\",");
-			    		  }
-			    		  if(i==1) {
-			    			  System.out.print("\"Name\":\""+first.get(j).get(1)+"\",");
-			    		  }
-			    		  if(i==2) {
-			    			  System.out.print("\"Grade\":\""+first.get(j).get(2)+"\"},");
-			    		  }
-			    	  }
-		    	  }else {
-			    	  for(int i = 0; i<first.get(j).size(); i++) {
-			    		  if(i==0) {
-			    			  System.out.print("{\"Code\":\""+first.get(j).get(0)+"\",");
-			    		  }
-			    		  if(i==1) {
-			    			  System.out.print("\"Name\":\""+first.get(j).get(1)+"\",");
-			    		  }
-			    		  if(i==2) {
-			    			  System.out.print("\"Grade\":\""+first.get(j).get(2)+"\"}],");
-			    		  }
-			    	  }		    		  
 
-		    	  }
+			      for(int j = 0; j<first.size(); j++)
+			      {
+			    	  
+			    	  if(j<first.size()-2) {
+				    	  for(int i = 0; i<first.get(j).size(); i++) {
+				    		  if(i==0) {
+				    			  System.out.print("{\"Code\":\""+first.get(j).get(0)+"\",");
+				    		  }
+				    		  if(i==1) {
+				    			  System.out.print("\"Name\":\""+first.get(j).get(1)+"\",");
+				    		  }
+				    		  if(i==2) {
+				    			  System.out.print("\"Grade\":\""+first.get(j).get(2)+"\"},");
+				    		  }
+				    	  }
+			    	  }else {
+				    	  for(int i = 0; i<first.get(j).size(); i++) {
+				    		  if(i==0) {
+				    			  System.out.print("{\"Code\":\""+first.get(j).get(0)+"\",");
+				    		  }
+				    		  if(i==1) {
+				    			  System.out.print("\"Name\":\""+first.get(j).get(1)+"\",");
+				    		  }
+				    		  if(i==2) {
+				    			  System.out.print("\"Grade\":\""+first.get(j).get(2)+"\"}],");
+				    		  }
+				    	  }		    		  
+	
+			    	  }
+			      }
 		      }
 		      
 		      
-		      
-		      
+		      if(second.size()==0) {
+		      }
+		      else {     
 		      System.out.print("\"Second\":[");
-		      for(int j = 0; j<second.size(); j++)
-		      {
-		    	  
-		    	  if(j<second.size()-1) {
-			    	  for(int i = 0; i<second.get(j).size(); i++) {
-			    		  if(i==0) {
-			    			  System.out.print("{\"Code\":\""+second.get(j).get(0)+"\",");
-			    		  }
-			    		  if(i==1) {
-			    			  System.out.print("\"Name\":\""+second.get(j).get(1)+"\",");
-			    		  }
-			    		  if(i==2) {
-			    			  System.out.print("\"Grade\":\""+second.get(j).get(2)+"\"},");
-			    		  }
-			    	  }
-		    	  }else {
-			    	  for(int i = 0; i<second.get(j).size(); i++) {
-			    		  if(i==0) {
-			    			  System.out.print("{\"Code\":\""+second.get(j).get(0)+"\",");
-			    		  }
-			    		  if(i==1) {
-			    			  System.out.print("\"Name\":\""+second.get(j).get(1)+"\",");
-			    		  }
-			    		  if(i==2) {
-			    			  System.out.print("\"Grade\":\""+second.get(j).get(2)+"\"}]}");
-			    		  }
-			    	  }		    		  
 
-		    	  }
+			      for(int j = 0; j<second.size(); j++)
+			      {
+			    	  
+			    	  if(j<second.size()-1) {
+				    	  for(int i = 0; i<second.get(j).size(); i++) {
+				    		  if(i==0) {
+				    			  System.out.print("{\"Code\":\""+second.get(j).get(0)+"\",");
+				    		  }
+				    		  if(i==1) {
+				    			  System.out.print("\"Name\":\""+second.get(j).get(1)+"\",");
+				    		  }
+				    		  if(i==2) {
+				    			  System.out.print("\"Grade\":\""+second.get(j).get(2)+"\"},");
+				    		  }
+				    	  }
+			    	  }else {
+				    	  for(int i = 0; i<second.get(j).size(); i++) {
+				    		  if(i==0) {
+				    			  System.out.print("{\"Code\":\""+second.get(j).get(0)+"\",");
+				    		  }
+				    		  if(i==1) {
+				    			  System.out.print("\"Name\":\""+second.get(j).get(1)+"\",");
+				    		  }
+				    		  if(i==2) {
+				    			  System.out.print("\"Grade\":\""+second.get(j).get(2)+"\"}]}");
+				    		  }
+				    	  }		    		  
+	
+			    	  }
+			      }
 		      }
 	      }
 	      
