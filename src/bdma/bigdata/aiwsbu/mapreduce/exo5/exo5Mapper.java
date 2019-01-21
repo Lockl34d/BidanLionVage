@@ -39,7 +39,7 @@ public class exo5Mapper extends TableMapper<Text, Text>{
 				keyStr = decode(keyStr);
 				String[] keyPart = keyStr.split("/");
 				
-				Text key_res = new Text( semester_to_promo.get(keyPart[1])+ "/" + keyPart[0]);
+				Text key_res = new Text( semester_to_promo.get(keyPart[1])+ "/" + keyPart[0]+"/"+keyPart[3]);
 
 				
 				byte[] val = value.getValue(Bytes.toBytes("#"), Bytes.toBytes("G"));
