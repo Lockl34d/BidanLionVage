@@ -24,7 +24,7 @@ public class exo5Request {
 	      Configuration config = HBaseConfiguration.create();
 
 	      // Instantiating HTable class(recuperation nom etudiant)
-	      HTable table1 = new HTable(config, "A:CINQ");
+	      HTable table1 = new HTable(config, "21502133:Exo5");
 	      
 	      String program = args[0].toString();
 	      String year = args[1].toString();
@@ -38,7 +38,6 @@ public class exo5Request {
 
 	      // Scanning the required columns
 	      scan1.setFilter(filtre1);
-	      //scan1.setMaxResultSize(1);
 	      scan1.addColumn(Bytes.toBytes("value"), Bytes.toBytes("test"));
 	      
 
@@ -64,13 +63,10 @@ public class exo5Request {
 		      Scan scan3 = new Scan();
 		      scan3.withStartRow(key.getBytes());
 		      scan3.setCacheBlocks(false);
-		      //RowFilter filtre3 = new RowFilter(CompareOp.EQUAL, new RegexStringComparator(idmatiere+"/["+newYear.charAt(0)+"-9]["+newYear.charAt(1)+"-9]["+newYear.charAt(2)+"-9]["+newYear.charAt(3)+"-9]") );
-		      //scan3.setFilter(filtre3);
 		      
 
 		      // Scanning the required columns
 		      scan3.setMaxResultSize(1);
-		      //scan3.addColumn(Bytes.toBytes("#"), Bytes.toBytes("N"));
 
 		      // Getting the scan result
 		      ResultScanner scanner3 = table3.getScanner(scan3);

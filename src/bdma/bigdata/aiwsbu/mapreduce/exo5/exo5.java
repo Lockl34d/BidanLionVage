@@ -5,7 +5,11 @@ package bdma.bigdata.aiwsbu.mapreduce.exo5;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.HColumnDescriptor;
+import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.TableExistsException;
 import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
 import org.apache.hadoop.io.LongWritable;
@@ -33,13 +37,24 @@ public class exo5 extends Configured implements Tool {
         //Job job = Job.getInstance();
     	
     	Configuration config = HBaseConfiguration.create();
+    	
+    	try {
+			HBaseAdmin admin = new HBaseAdmin(config);
+			HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("21502133:Exo5"));
+			tableDescriptor.addFamily(new HColumnDescriptor("value"));
+			admin.createTable(tableDescriptor);			
+		} catch (TableExistsException e) {}
+
+
+    	
+    	
     	Job job = new Job(config,"Exo5");
         job.setJarByClass(exo5.class);
         Scan scan = new Scan();
         scan.setCaching(500);
         scan.setCacheBlocks(false);
         TableName tableName = TableName.valueOf("A:G");
-        String out = "A:CINQ";
+        String out = "21502133:Exo5";
         job.setOutputKeyClass(Text.class); 
         job.setOutputValueClass(LongWritable.class);
         TableMapReduceUtil.initTableMapperJob(tableName, scan, exo5Mapper.class, Text.class,
