@@ -24,7 +24,7 @@ public class exo2Request {
 	      Configuration config = HBaseConfiguration.create();
 
 	      // Instantiating HTable class(recuperation nom etudiant)
-	      HTable table1 = new HTable(config, "A:N");
+	      HTable table1 = new HTable(config, "A:Exo2");
 	      
 	      String semestre = args[0].toString();
 
@@ -41,7 +41,9 @@ public class exo2Request {
 
 	      // Getting the scan result
 	      ResultScanner scanner1 = table1.getScanner(scan1);
-    	  
+    	  if(scanner1.next()==null) {
+    		  System.out.print("NOT FOUND");
+    	  }else {
 	      
 	      System.out.print("[");
 	    
@@ -82,7 +84,7 @@ public class exo2Request {
 	      
 	      scanner1.close();
 	    
-
+    	  }
 	}
 
 }

@@ -82,7 +82,7 @@ public class exo2 extends Configured {
         job.setOutputValueClass(LongWritable.class);
         TableMapReduceUtil.initTableMapperJob("A:DEUX1", scan, exo2Mapper2.class, Text.class,
                 Text.class, job);
-        TableMapReduceUtil.initTableReducerJob("A:N", exo2Reducer2.class, job);
+        TableMapReduceUtil.initTableReducerJob("A:Exo2", exo2Reducer2.class, job);
         
         
         return job.waitForCompletion(true);
