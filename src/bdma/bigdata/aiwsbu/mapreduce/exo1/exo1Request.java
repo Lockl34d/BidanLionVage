@@ -64,7 +64,7 @@ public class exo1Request {
 	    	 
 	    	  
 	    	  // Instantiating HTable class
-		      HTable table2 = new HTable(config, "A:R");
+		      HTable table2 = new HTable(config, "A:Exo1");
 
 		      // Instantiating the Scan class
 		      Scan scan2 = new Scan();
@@ -214,4 +214,3 @@ public class exo1Request {
 	}
 
 }
-
