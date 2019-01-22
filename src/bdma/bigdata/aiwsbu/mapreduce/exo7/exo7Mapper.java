@@ -43,7 +43,7 @@ public class exo7Mapper extends TableMapper<Text, Text>{
 				String note = new String(val, "UTF-8");
 				
 				
-				Text key_res = new Text( semester_to_promo.get(keyPart[1])+ "/" + keyPart[0] + "/" + keyPart[2] +"/" + note);
+				Text key_res = new Text( semester_to_promo.get(keyPart[1])+ "/" + keyPart[0] + "/" + keyPart[2]);
 
 				
 				
