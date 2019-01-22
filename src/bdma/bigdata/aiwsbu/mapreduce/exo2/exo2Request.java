@@ -26,7 +26,7 @@ public class exo2Request {
 	      // Instantiating HTable class(recuperation nom etudiant)
 	      HTable table1 = new HTable(config, "A:Exo2");
 	      String content = "";
-	      String semestre = args[0].toString();
+	      String semestre = "01";
 
 	      // Instantiating the Scan class
 	      Scan scan1 = new Scan();
@@ -42,9 +42,9 @@ public class exo2Request {
 	      // Getting the scan result
 	      ResultScanner scanner1 = table1.getScanner(scan1);
 	      Result test = table1.getScanner(scan1).next();
-    	  if(test==null) {
+    	  /*if(test==null) {
     		  content = "NOT FOUND";
-    	  }else {
+    	  }else {*/
 	      
 	      content = "[";
 	    
@@ -84,8 +84,10 @@ public class exo2Request {
 	      content = content + "]";
 	      
 	      scanner1.close();
-	    
-    	  }
+    	  //}
+	      
+
+		    System.out.println(content);
 	}
 
 }
