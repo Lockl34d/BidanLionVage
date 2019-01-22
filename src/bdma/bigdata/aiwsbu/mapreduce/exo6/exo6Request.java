@@ -60,7 +60,6 @@ public class exo6Request {
 					String annee = keyPart[1];
 					int year = Integer.valueOf(keyPart[1].toString());
 					int newYear = 9999 - year ;
-					System.out.println(newYear);
 
 					content = content + "\"" + keyPart[0] + "/" + newYear + "\":{";
 
@@ -114,7 +113,7 @@ public class exo6Request {
 					int newYear = 9999 - year ;
 					System.out.println(newYear);
 
-					content = content + ",\"" + keyPart[0] + "/" + newYear + "\":{";
+					
 
 					// Instantiating HTable class(recuperation nom du cours)
 					HTable table2 = new HTable(config, "A:C");
@@ -132,7 +131,7 @@ public class exo6Request {
 
 					// Getting the scan result
 					ResultScanner scanner2 = table2.getScanner(scan2);
-					content = content + "\"Name\":\"" + new String(scanner2.next().getValue(Bytes.toBytes("#"), Bytes.toBytes("N")), "UTF-8") + "\",";
+					
 
 					
 					// Instantiating HTable class(recuperation rate)
@@ -145,13 +144,13 @@ public class exo6Request {
 					
 					// Getting the get result
 					Result get = table2_1.get(g);
-					
-					byte[] value = get.getValue(Bytes.toBytes("value"), Bytes.toBytes("test"));
-					String rate = new String(value, "UTF-8");
-					
-					
-					content = content + "\"Rate\":\"" + rate + "\"}";
-					System.out.println(content);
+					if(get.getValue(Bytes.toBytes("value"), Bytes.toBytes("test"))!=null) {
+						byte[] value = get.getValue(Bytes.toBytes("value"), Bytes.toBytes("test"));
+						String rate = new String(value, "UTF-8");
+						content = content + ",\"" + keyPart[0] + "/" + newYear + "\":{";
+						content = content + "\"Name\":\"" + new String(scanner2.next().getValue(Bytes.toBytes("#"), Bytes.toBytes("N")), "UTF-8") + "\",";
+						content = content + "\"Rate\":\"" + rate + "\"}";
+					}
 				}
 				
 				
