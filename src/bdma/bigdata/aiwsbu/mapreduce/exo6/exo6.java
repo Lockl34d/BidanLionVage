@@ -54,13 +54,13 @@ public class exo6 extends Configured implements Tool {
         scan.setCacheBlocks(false);
         TableMapReduceUtil.initTableMapperJob("A:G", scan, exo6Mapper1.class, Text.class,
                 Text.class, job);
-        TableMapReduceUtil.initTableReducerJob("A:SIX1", exo6Reducer1.class, job);
+        TableMapReduceUtil.initTableReducerJob("A:Exo61", exo6Reducer1.class, job);
         
         
         
         TableMapReduceUtil.initTableMapperJob("A:C", scan, exo6Mapper2.class, Text.class,
                 Text.class, job);
-        TableMapReduceUtil.initTableReducerJob("A:SIX2", exo6Reducer2.class, job);
+        TableMapReduceUtil.initTableReducerJob("A:Exo62", exo6Reducer2.class, job);
         
     	return job.waitForCompletion(true) ? 0: 1;
     }
@@ -69,7 +69,7 @@ public class exo6 extends Configured implements Tool {
     	Configuration config = HBaseConfiguration.create();
     	try {
 			HBaseAdmin admin = new HBaseAdmin(config);
-			HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("A:SIX1"));
+			HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("A:Exo61"));
 			tableDescriptor.addFamily(new HColumnDescriptor("value"));
 			admin.createTable(tableDescriptor); 
     	} catch (TableExistsException e) {} 
@@ -79,7 +79,7 @@ public class exo6 extends Configured implements Tool {
         scan.setCacheBlocks(false);
         TableMapReduceUtil.initTableMapperJob("A:G", scan, exo6Mapper1.class, Text.class,
                 Text.class, job);
-        TableMapReduceUtil.initTableReducerJob("A:SIX1", exo6Reducer1.class, job);
+        TableMapReduceUtil.initTableReducerJob("A:Exo61", exo6Reducer1.class, job);
         return job.waitForCompletion(true);
     }
     
@@ -87,7 +87,7 @@ public class exo6 extends Configured implements Tool {
     	Configuration config = HBaseConfiguration.create();
     	try {
 			HBaseAdmin admin = new HBaseAdmin(config);
-			HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("A:SIX2"));
+			HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("A:Exo62"));
 			tableDescriptor.addFamily(new HColumnDescriptor("value"));
 			admin.createTable(tableDescriptor); 
     	} catch (TableExistsException e) {} 
@@ -98,7 +98,7 @@ public class exo6 extends Configured implements Tool {
         scan.setCacheBlocks(false);
         TableMapReduceUtil.initTableMapperJob("A:C", scan, exo6Mapper2.class, Text.class,
                 Text.class, job);
-        TableMapReduceUtil.initTableReducerJob("A:SIX2", exo6Reducer2.class, job);
+        TableMapReduceUtil.initTableReducerJob("A:Exo62", exo6Reducer2.class, job);
         return job.waitForCompletion(true);
     }
 	

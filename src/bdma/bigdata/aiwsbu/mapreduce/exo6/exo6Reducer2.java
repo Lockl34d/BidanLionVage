@@ -16,11 +16,13 @@ public class exo6Reducer2 extends TableReducer<Text, Text, ImmutableBytesWritabl
 	public void reduce(Text key, Iterable<Text> val, Context c) throws IOException, InterruptedException {
 		
 		
-		Put put = new Put(Bytes.toBytes(key.toString()));
+		
 		for (Text n : val) {
-			put.add(Bytes.toBytes("value"), Bytes.toBytes("test"+n),Bytes.toBytes(""+n));
+			Put put = new Put(Bytes.toBytes(key.toString() + "/" + n ));
+			put.add(Bytes.toBytes("value"), Bytes.toBytes("test"),Bytes.toBytes(""+n));
+			c.write(null, put);	
 		}
-		c.write(null, put);			
+				
 		
 		
 		
