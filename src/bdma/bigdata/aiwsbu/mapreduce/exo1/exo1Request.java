@@ -45,6 +45,10 @@ public class exo1Request {
 	      // Getting the scan result
 	      ResultScanner scanner1 = table1.getScanner(scan1);
 
+	      Result scanner10 = table1.getScanner(scan1).next();
+	      if(scanner10==null) {
+	    	  System.out.print("NOT FOUND");
+	      }
 	      for(Result r1 : scanner1) {
 	    	  byte[] keyEtu = r1.getRow();
 	    	  byte[] res1 = r1.getValue(Bytes.toBytes("#"), Bytes.toBytes("F"));
@@ -143,6 +147,7 @@ public class exo1Request {
 			   
 		      
 		      }
+
 		      if(first.size()==0) {
 		    	  System.out.print("NOT FOUND");
 		      }else {   	
