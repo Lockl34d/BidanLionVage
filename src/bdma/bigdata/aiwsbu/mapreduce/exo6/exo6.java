@@ -10,7 +10,11 @@ import java.util.HashMap;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.HColumnDescriptor;
+import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.TableExistsException;
 import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
 import org.apache.hadoop.io.LongWritable;
@@ -63,6 +67,12 @@ public class exo6 extends Configured implements Tool {
     
     private static boolean p1() throws Exception {
     	Configuration config = HBaseConfiguration.create();
+    	try {
+			HBaseAdmin admin = new HBaseAdmin(config);
+			HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("A:SIX1"));
+			tableDescriptor.addFamily(new HColumnDescriptor("value"));
+			admin.createTable(tableDescriptor); 
+    	} catch (TableExistsException e) {} 
     	Job job = new Job(config,"Exo6-1");
     	Scan scan = new Scan();
         scan.setCaching(500);
@@ -75,6 +85,13 @@ public class exo6 extends Configured implements Tool {
     
     private static boolean p2() throws Exception {
     	Configuration config = HBaseConfiguration.create();
+    	try {
+			HBaseAdmin admin = new HBaseAdmin(config);
+			HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("A:SIX2"));
+			tableDescriptor.addFamily(new HColumnDescriptor("value"));
+			admin.createTable(tableDescriptor); 
+    	} catch (TableExistsException e) {} 
+    	
     	Job job = new Job(config,"Exo6-2");
     	Scan scan = new Scan();
         scan.setCaching(500);
