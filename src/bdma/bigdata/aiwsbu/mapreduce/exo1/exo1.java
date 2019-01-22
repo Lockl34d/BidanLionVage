@@ -46,22 +46,14 @@ public class exo1 extends Configured implements Tool {
         
     	Configuration config = HBaseConfiguration.create();
     	
-<<<<<<< HEAD
-    	
-=======
->>>>>>> 316ba33453b4fcc3c503f914bcc4a209c9b35667
+
     	try {
 			HBaseAdmin admin = new HBaseAdmin(config);
 			HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("A:Exo1"));
 			tableDescriptor.addFamily(new HColumnDescriptor("value"));
-<<<<<<< HEAD
-			admin.createTable(tableDescriptor);	} catch (TableExistsException e) {}		
+			admin.createTable(tableDescriptor);	
+		} catch (TableExistsException e) {}		
 
-=======
-			admin.createTable(tableDescriptor);			
-		} catch (TableExistsException e) {}
-    	
->>>>>>> 316ba33453b4fcc3c503f914bcc4a209c9b35667
     	Job job = new Job(config,"Note");
         job.setJarByClass(exo1.class);
         //job.setJobName("je fais un test de count");
