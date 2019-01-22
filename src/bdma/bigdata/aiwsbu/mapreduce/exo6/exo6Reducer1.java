@@ -23,7 +23,7 @@ public class exo6Reducer1 extends TableReducer<Text, Text, ImmutableBytesWritabl
 		res /= nb;
 		
 		Put put = new Put(Bytes.toBytes(key.toString()));
-		put.add(Bytes.toBytes("value"), Bytes.toBytes("test"),Bytes.toBytes(""+nb));
+		put.add(Bytes.toBytes("value"), Bytes.toBytes("test"),Bytes.toBytes(""+res));
 		c.write(null, put);
 		
 		
