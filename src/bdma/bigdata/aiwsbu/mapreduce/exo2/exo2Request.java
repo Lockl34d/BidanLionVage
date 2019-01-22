@@ -25,7 +25,7 @@ public class exo2Request {
 
 	      // Instantiating HTable class(recuperation nom etudiant)
 	      HTable table1 = new HTable(config, "A:Exo2");
-	      
+	      String content = "";
 	      String semestre = args[0].toString();
 
 	      // Instantiating the Scan class
@@ -43,10 +43,10 @@ public class exo2Request {
 	      ResultScanner scanner1 = table1.getScanner(scan1);
 	      Result test = table1.getScanner(scan1).next();
     	  if(test==null) {
-    		  System.out.print("NOT FOUND");
+    		  content = "NOT FOUND";
     	  }else {
 	      
-	      System.out.print("[");
+	      content = "[";
 	    
 	      int premierpassage = 1;
 	      
@@ -63,7 +63,7 @@ public class exo2Request {
 					
 		  		  String annee = keyPart[1];
 		  		  
-		  		  System.out.print("{\"Year\":\""+annee+"\",\"Rate\":\""+monratio+"\"}"); 
+		  		  content = content + "{\"Year\":\"" + annee + "\",\"Rate\":\"" + monratio + "\"}"; 
 	    		  
 		  		  premierpassage = premierpassage-1;
 	    	  }else {
@@ -77,11 +77,11 @@ public class exo2Request {
 				
 	  		  String annee = keyPart[1];
 	  		  
-	  		  System.out.print(",{\"Year\":\""+annee+"\",\"Rate\":\""+monratio+"\"}");
+	  		  content = content + ",{\"Year\":\"" +annee + "\",\"Rate\":\"" + monratio + "\"}";
 	    	  } 
 
 	      }
-	      System.out.print("]");
+	      content = content + "]";
 	      
 	      scanner1.close();
 	    
