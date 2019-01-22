@@ -44,7 +44,10 @@ public class exo4Request {
 	      // Getting the scan result
 	      ResultScanner scanner1 = table1.getScanner(scan1);
     	  
-
+	      Result r = table1.getScanner(scan1).next();
+	      if (r==null) {
+			System.out.print("NOT FOUND");
+	      }else {
 	      
 	      for(Result r1 : scanner1) {
 	    	  
@@ -79,6 +82,7 @@ public class exo4Request {
 	    	  
 		      }*/
 
+	      }
 	      }
 	      
 	      scanner1.close();
