@@ -4,15 +4,20 @@ import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.Connection;
+import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
+import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.filter.RegexStringComparator;
 import org.apache.hadoop.hbase.filter.RowFilter;
 import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
+
 import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
 import org.apache.hadoop.hbase.mapreduce.TableMapper;
 import org.apache.hadoop.hbase.util.Bytes;
@@ -21,14 +26,15 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 
 public class exo3Mapper extends TableMapper<Text, Text>{
-	HTable table;
+	Table table;
 	String last = "";
 	@Override
 	protected void setup(Mapper<ImmutableBytesWritable, Result, Text, Text>.Context context)
 			throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
 		Configuration config = HBaseConfiguration.create();
-    	table = new HTable(config, "A:C");
+		Connection connection = ConnectionFactory.createConnection(config);
+    	table = connection.getTable(TableName.valueOf("A:C"));
 	}
 	
 	
@@ -48,21 +54,34 @@ public class exo3Mapper extends TableMapper<Text, Text>{
 		String note = new String(val, "UTF-8");
 
 		
-    	
-    	try {
-    		Get get = new Get(Bytes.toBytes(keyPart[3]+"/"+(10000-Integer.valueOf(keyPart[0]))));
-        	
-        	Result result = table.get(get);
-        	String name = new String(result.getValue(Bytes.toBytes("#"), Bytes.toBytes("N")));
-        	last = name;
-        	
-        	
-		} catch (Exception e) {	}
-    	finally {
-        	Text key_res = new Text( keyPart[3] + "/" + last);
-            //u/name n
-            context.write(key_res, new Text(""+ note));
+		Scan scan = new Scan();
+		scan.withStartRow(Bytes.toBytes(keyPart[3]+"/"+(9999-Integer.valueOf(keyPart[0]))), true);
+		scan.withStopRow(Bytes.toBytes(keyPart[3]+"/9999"), true);
+		scan.setMaxResultSize(1);
+		Result result = table.getScanner(scan).next();
+		String name = "";
+		
+		if (result != null ) {
+			name = new String(result.getValue(Bytes.toBytes("#"), Bytes.toBytes("N")));
 		}
+		Text key_res = new Text( keyPart[3] + "/" + name);
+		context.write(key_res, new Text(""+note));
+		
+    	
+//    	try {
+//    		Get get = new Get(Bytes.toBytes(keyPart[3]+"/"+(10000-Integer.valueOf(keyPart[0]))));
+//        	
+//        	Result result = table.get(get);
+//        	String name = new String(result.getValue(Bytes.toBytes("#"), Bytes.toBytes("N")));
+//        	last = name;
+//        	
+//        	
+//		} catch (Exception e) {	}
+//    	finally {
+//        	Text key_res = new Text( keyPart[3] + "/" + last);
+//            //u/name n
+//            context.write(key_res, new Text(""+ note));
+//		}
 		
 		
     	
