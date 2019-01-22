@@ -24,7 +24,7 @@ public class exo5Request {
 	      Configuration config = HBaseConfiguration.create();
 
 	      // Instantiating HTable class(recuperation nom etudiant)
-	      HTable table1 = new HTable(config, "21502133:Exo5");
+	      HTable table1 = new HTable(config, "A:Exo5");
 	      
 	      String program = args[0].toString();
 	      String year = args[1].toString();
@@ -43,7 +43,13 @@ public class exo5Request {
 
 	      // Getting the scan result
 	      ResultScanner scanner1 = table1.getScanner(scan1);
+    	  Result r = table1.getScanner(scan1).next();
+    	  if(r==null || year.equals("2018")) {
+    		  System.out.print("NOT FOUND");
+    	  }else {
+    		  
     	  
+
 	     int temp = 1;
 	      System.out.print("{");
 	      for(Result r1 : scanner1) {
@@ -92,9 +98,9 @@ public class exo5Request {
 
 	    	  
 
-	      }
+	      	}
 	      System.out.print("}");
-	      
+    	  }
 	      scanner1.close();
 	    
 

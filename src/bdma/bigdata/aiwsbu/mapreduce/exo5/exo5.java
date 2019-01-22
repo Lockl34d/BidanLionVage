@@ -40,7 +40,7 @@ public class exo5 extends Configured implements Tool {
     	
     	try {
 			HBaseAdmin admin = new HBaseAdmin(config);
-			HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("21502133:Exo5"));
+			HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("A:Exo5"));
 			tableDescriptor.addFamily(new HColumnDescriptor("value"));
 			admin.createTable(tableDescriptor);			
 		} catch (TableExistsException e) {}
@@ -54,7 +54,7 @@ public class exo5 extends Configured implements Tool {
         scan.setCaching(500);
         scan.setCacheBlocks(false);
         TableName tableName = TableName.valueOf("A:G");
-        String out = "21502133:Exo5";
+        String out = "A:Exo5";
         job.setOutputKeyClass(Text.class); 
         job.setOutputValueClass(LongWritable.class);
         TableMapReduceUtil.initTableMapperJob(tableName, scan, exo5Mapper.class, Text.class,
