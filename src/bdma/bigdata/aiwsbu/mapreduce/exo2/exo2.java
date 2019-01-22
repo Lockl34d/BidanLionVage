@@ -72,6 +72,14 @@ public class exo2 extends Configured {
     
     public static boolean p2() throws Exception{
     	Configuration config = HBaseConfiguration.create();
+    	try {
+			HBaseAdmin admin = new HBaseAdmin(config);
+			HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("A:Exo2"));
+			tableDescriptor.addFamily(new HColumnDescriptor("value"));
+
+			admin.createTable(tableDescriptor); 
+		} catch (TableExistsException e) {} 
+    	
     	Job job = new Job(config,"Exo2-2");
         job.setJarByClass(exo2.class);
         Scan scan = new Scan();

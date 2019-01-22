@@ -41,7 +41,8 @@ public class exo2Request {
 
 	      // Getting the scan result
 	      ResultScanner scanner1 = table1.getScanner(scan1);
-    	  if(scanner1.next()==null) {
+	      Result test = table1.getScanner(scan1).next();
+    	  if(test==null) {
     		  System.out.print("NOT FOUND");
     	  }else {
 	      
