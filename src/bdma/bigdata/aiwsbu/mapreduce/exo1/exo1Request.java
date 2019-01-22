@@ -24,9 +24,9 @@ public class exo1Request {
 
 	      // Instantiating HTable class(recuperation nom etudiant)
 	      HTable table1 = new HTable(config, "A:S");
-	      
-	      String numEtu = args[0].toString();
-	      String program = args[1].toString();
+	      String content ="";
+	      String numEtu = "2002000082";
+	      String program = "L2";
 
 	      // Instantiating the Scan class
 	      Scan scan1 = new Scan();
@@ -47,7 +47,7 @@ public class exo1Request {
 
 	      Result scanner10 = table1.getScanner(scan1).next();
 	      if(scanner10==null) {
-	    	  System.out.print("NOT FOUND");
+	    	  content="NOT FOUND";
 	      }
 	      for(Result r1 : scanner1) {
 	    	  byte[] keyEtu = r1.getRow();
@@ -103,7 +103,7 @@ public class exo1Request {
 		    	  
 		    	  //--------------------------------------------------------------------------------
 		    	  if(annee.equals("2018")) {
-		    		  System.out.print("NOT FOUND");
+		    		  content="NOT FOUND";
 		    		  break;
 		    	  }
 		    	  int year = 9999-(Integer.parseInt(annee));
@@ -149,36 +149,36 @@ public class exo1Request {
 		      }
 
 		      if(first.size()==0) {
-		    	  System.out.print("NOT FOUND");
+		    	  content="NOT FOUND";
 		      }else {   	
-		      System.out.print("{\"Name\":\"" + name + "\",\"Email\":\"" + email + "\",\"Program\":\"" + program+"\",");
-		      System.out.print("\"First\":[");
+		      content="{\"Name\":\"" + name + "\",\"Email\":\"" + email + "\",\"Program\":\"" + program+"\",";
+		      content=content+"\"First\":[";
 
 			      for(int j = 0; j<first.size(); j++)
 			      {
 			    	  
-			    	  if(j<first.size()-2) {
+			    	  if(j<first.size()-1) {
 				    	  for(int i = 0; i<first.get(j).size(); i++) {
 				    		  if(i==0) {
-				    			  System.out.print("{\"Code\":\""+first.get(j).get(0)+"\",");
+				    			  content = content+"{\"Code\":\""+first.get(j).get(0)+"\",";
 				    		  }
 				    		  if(i==1) {
-				    			  System.out.print("\"Name\":\""+first.get(j).get(1)+"\",");
+				    			  content = content+"\"Name\":\""+first.get(j).get(1)+"\",";
 				    		  }
 				    		  if(i==2) {
-				    			  System.out.print("\"Grade\":\""+first.get(j).get(2)+"\"},");
+				    			  content = content+"\"Grade\":\""+first.get(j).get(2)+"\"},";
 				    		  }
 				    	  }
 			    	  }else {
 				    	  for(int i = 0; i<first.get(j).size(); i++) {
 				    		  if(i==0) {
-				    			  System.out.print("{\"Code\":\""+first.get(j).get(0)+"\",");
+				    			  content = content+"{\"Code\":\""+first.get(j).get(0)+"\",";
 				    		  }
 				    		  if(i==1) {
-				    			  System.out.print("\"Name\":\""+first.get(j).get(1)+"\",");
+				    			  content = content+"\"Name\":\""+first.get(j).get(1)+"\",";
 				    		  }
 				    		  if(i==2) {
-				    			  System.out.print("\"Grade\":\""+first.get(j).get(2)+"\"}],");
+				    			  content = content+"\"Grade\":\""+first.get(j).get(2)+"\"}],";
 				    		  }
 				    	  }		    		  
 	
@@ -190,7 +190,7 @@ public class exo1Request {
 		      if(second.size()==0) {
 		      }
 		      else {     
-		      System.out.print("\"Second\":[");
+		    	  content = content+"\"Second\":[";
 
 			      for(int j = 0; j<second.size(); j++)
 			      {
@@ -198,25 +198,25 @@ public class exo1Request {
 			    	  if(j<second.size()-1) {
 				    	  for(int i = 0; i<second.get(j).size(); i++) {
 				    		  if(i==0) {
-				    			  System.out.print("{\"Code\":\""+second.get(j).get(0)+"\",");
+				    			  content = content+"{\"Code\":\""+second.get(j).get(0)+"\",";
 				    		  }
 				    		  if(i==1) {
-				    			  System.out.print("\"Name\":\""+second.get(j).get(1)+"\",");
+				    			  content = content+"\"Name\":\""+second.get(j).get(1)+"\",";
 				    		  }
 				    		  if(i==2) {
-				    			  System.out.print("\"Grade\":\""+second.get(j).get(2)+"\"},");
+				    			  content = content+"\"Grade\":\""+second.get(j).get(2)+"\"},";
 				    		  }
 				    	  }
 			    	  }else {
 				    	  for(int i = 0; i<second.get(j).size(); i++) {
 				    		  if(i==0) {
-				    			  System.out.print("{\"Code\":\""+second.get(j).get(0)+"\",");
+				    			  content = content+"{\"Code\":\""+second.get(j).get(0)+"\",";
 				    		  }
 				    		  if(i==1) {
-				    			  System.out.print("\"Name\":\""+second.get(j).get(1)+"\",");
+				    			  content = content+"\"Name\":\""+second.get(j).get(1)+"\",";
 				    		  }
 				    		  if(i==2) {
-				    			  System.out.print("\"Grade\":\""+second.get(j).get(2)+"\"}]}");
+				    			  content = content+"\"Grade\":\""+second.get(j).get(2)+"\"}]}";
 				    		  }
 				    	  }		    		  
 	
@@ -225,7 +225,7 @@ public class exo1Request {
 			      }
 		      }
 	      }
-	      
+	      System.out.println(content);
 	      scanner1.close();
 	    
 
